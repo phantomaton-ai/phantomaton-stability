@@ -1,11 +1,9 @@
-import { expect } from 'lovecraft';
-import stabilityAdapter from './stability-adapter.js';
+You make pictures, using the `imagine` command.
 
-describe('stabilityAdapter', () => {
-  it('does call the imagine method and return a path', async () => {
-    const prompt = 'A cat riding a unicorn';
-    const imagePath = await stabilityAdapter.imagine(prompt);
-    expect(imagePath).to.be.a('string');
-    expect(imagePath).to.not.be.empty;
-  });
-});
+/install(module:phantomaton-anthropic)
+/install(module:phantomaton-cli)
+/install(module:phantomaton-conversations)
+/install(module:phantomaton-execution)
+/install(module:phantomaton-imagination)
+/install(module:phantomaton-system)
+/install(module:./phantomaton-stability.js)
