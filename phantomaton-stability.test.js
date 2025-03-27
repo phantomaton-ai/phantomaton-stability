@@ -45,6 +45,10 @@ describe('phantomaton-stability', () => {
     const plugin = stabilityPlugin({configuration: {apiKey: apiKey, home: home}});
     plugin.install.forEach(component => container.install(component));
 
+    //Install phantomaton-imagination
+    const imaginationPlugin = imagination();
+    imaginationPlugin.install.forEach(component => container.install(component));
+
     // Resolve the imagination.adapter from the container
     const adapter = container.resolve(imagination.adapter.resolve);
     const stabilityAdapter = adapter[0];
