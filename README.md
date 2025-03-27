@@ -12,11 +12,13 @@ npm install phantomaton-stability
 
 ## Usage 🕸️
 
-To unleash the power of Stability AI image generation within Phantomaton, simply install the module:
+To unleash the power of Stability AI image generation within [Phantomaton](https://github.com/phantomaton-ai/phantomaton), simply install the module:
 
 ```markdown
 /install(module:phantomaton-stability)
 ```
+
+To enable this and other plugins in your system prompt, you can edit `.phantomaton/configuration.json` to expose their commands.
 
 ### Configuration ⚙️
 
