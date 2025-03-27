@@ -20,7 +20,11 @@
   "type": "module",
   "devDependencies": {
     "lovecraft": "^1.0.3",
-    "phantomaton": "^0.1.0"
+    "phantomaton": "^0.1.0",
+    "phantomaton-anthropic": "^1.0.11",
+    "phantomaton-cli": "^1.0.7",
+    "phantomaton-execution": "^0.0.7",
+    "phantomaton-system": "^1.0.0"
   },
   "dependencies": {
     "node-fetch": "^3.3.2",
