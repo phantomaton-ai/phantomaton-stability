@@ -1,22 +1,21 @@
 import { expect, stub } from 'lovecraft';
 import fs from 'fs';
 import path from 'path';
-import * as uuid from 'uuid';
+import hierophant from 'hierophant';
 
-import util from './util.js';
+import stabilityPlugin from './phantomaton-stability.js';
 import Adapter from './adapter.js';
+import util from './util.js';
 
-describe('Phantomaton Stability Plugin', () => {
+describe('phantomaton-stability', () => {
   let fetchStub, createWriteStreamStub, uuidStub;
   const apiKey = 'test-api-key';
   const home = 'test-images';
-  let adapter;
 
   beforeEach(() => {
     fetchStub = stub(util, 'fetch');
     createWriteStreamStub = stub(fs, 'createWriteStream');
     uuidStub = stub(util, 'uuid').returns('test-uuid');
-    adapter = new Adapter({ apiKey, home });
   });
 
   afterEach(() => {
@@ -25,7 +24,7 @@ describe('Phantomaton Stability Plugin', () => {
     uuidStub.restore();
   });
 
-  it('calls the Stability AI API and saves the image to a file', async () => {
+  it('does register the adapter and call the Stability AI API when imagine is called', async () => {
     const prompt = 'A cat riding a unicorn';
     const mockResponse = {
       body: {
@@ -38,9 +37,21 @@ describe('Phantomaton Stability Plugin', () => {
       on: stub().yields()
     });
 
-    const imagePath = await adapter.imagine(prompt);
+    // Create a hierophant container
+    const container = hierophant();
 
-    expect(fetchStub).toHaveBeenCalledWith(
+    // Install the phantomaton-stability plugin
+    const plugin = stabilityPlugin({configuration: {apiKey: apiKey, home: home}});
+    plugin.install.forEach(component => container.install(component));
+
+    // Resolve the imagination.adapter from the container
+    const adapter = container.resolve({adapter:{}});
+    const stabilityAdapter = adapter[0];
+
+    // Call the imagine method on the resolved adapter
+    const imagePath = await stabilityAdapter.imagine(prompt);
+
+    expect(util.fetch).toHaveBeenCalledWith(
       'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image',
       {
         body: JSON.stringify({
@@ -58,7 +69,7 @@ describe('Phantomaton Stability Plugin', () => {
     );
 
     const expectedFilename = path.join(home, 'test-uuid.png');
-    expect(createWriteStreamStub).toHaveBeenCalledWith(expectedFilename);
+    expect(fs.createWriteStream).toHaveBeenCalledWith(expectedFilename);
     expect(imagePath).to.eq(expectedFilename);
   });
 });
