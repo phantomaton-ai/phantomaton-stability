@@ -1,8 +1,10 @@
+import imagination from 'phantomaton-imagination';
 import plugins from 'phantomaton-plugins';
-import stabilityAdapter from './stability-adapter.js';
 
-const plugin = plugins.create([
-  plugins.define({adapter: {}}).as(stabilityAdapter)
+import Adapter from './adapter.js';
+
+const plugin = plugins.create(({ configuration }) => [
+  plugins.define(imagination.adapter).as(new Adapter(configuration))
 ]);
 
 export default plugin;
