@@ -1,6 +1,6 @@
 {
   "name": "phantomaton-stability",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "phantomaton-stability.js",
   "scripts": {
     "all": "lovecraft -a",
