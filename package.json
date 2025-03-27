@@ -19,10 +19,12 @@
   "description": "",
   "type": "module",
   "devDependencies": {
-    "lovecraft": "^1.0.3"
+    "lovecraft": "^1.0.3",
+    "phantomaton": "^0.1.0"
   },
   "dependencies": {
     "node-fetch": "^3.3.2",
+    "phantomaton-imagination": "^0.0.1",
     "uuid": "^11.1.0"
   }
 }

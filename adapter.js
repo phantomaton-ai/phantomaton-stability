@@ -1,7 +1,7 @@
 import fetch from 'node-fetch';
-import uuid from 'uuid';
+import * as uuid from 'uuid';
 
-export default Adapter {
+export default class Adapter {
   constructor({ apiKey, home }) {
     this.apiKey = apiKey;
     this.home = home || 'data/images';
