@@ -12,31 +12,25 @@ npm install phantomaton-stability
 
 ## Usage 🕸️
 
-To unleash the power of Stability AI image generation within [Phantomaton](https://github.com/phantomaton-ai/phantomaton), simply install the module:
+To unleash the power of Stability AI image generation within [Phantomaton](https://github.com/phantomaton-ai/phantomaton), simply install the module in your system prompt:
 
 ```markdown
 /install(module:phantomaton-stability)
 ```
 
-To enable this and other plugins in your system prompt, you can edit `.phantomaton/configuration.json` to expose their commands.
-
 ### Configuration ⚙️
 
 The Stability Adapter requires an API key to access the Stability AI API. You can obtain an API key from [https://platform.stability.ai/](https://platform.stability.ai/).
 
-You can configure the API key and home directory (where generated images are stored) when defining the plugin:
+You can configure the API key and home directory (where generated images are stored) in `.phantomaton/configuration.json`:
 
-```javascript
-import imagination from 'phantomaton-imagination';
-import stability from 'phantomaton-stability';
-import plugins from 'phantomaton-plugins';
-
-const apiKey = 'YOUR_STABILITY_API_KEY';
-const home = 'path/to/your/image/directory';
-
-export default plugins.create(({ configuration }) => [
-  plugins.define(imagination.adapter).as(stability({ apiKey, home }))
-]);
+```
+{
+ "phantomaton-stability": {
+   "apiKey": "YOUR_STABILITY_API_KEY",
+   "home": "path/to/images"
+ }
+}
 ```
 
 **Note:** Replace `YOUR_STABILITY_API_KEY` with your actual Stability AI API key.
@@ -46,9 +40,9 @@ export default plugins.create(({ configuration }) => [
 Once the adapter is installed and configured, your assistant will have access to the `imagine` command:
 
 ```markdown
-imagine(project:my-project, file:image.png) {
+/imagine(project:my-project, file:image.png) {
   A cat riding a unicorn
-} imagine⚡️
+} imagine!
 ```
 
 This will generate an image based on the prompt "A cat riding a unicorn" and save it to `image.png` in the `my-project` project.
