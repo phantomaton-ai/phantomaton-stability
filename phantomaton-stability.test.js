@@ -30,19 +30,23 @@ describe('phantomaton-stability', () => {
     const mockResponse = {
       body: {
         pipe: stub().returnsThis(),
-        on: stub().yields()
+        on: stub()
       }
     };
     fetchStub.resolves(mockResponse);
     createWriteStreamStub.returns({
-      on: stub().yields()
+      on: stub().callsFake((event, callback) => {
+        if (event === 'finish') {
+          callback();
+        }
+      })
     });
 
     // Create a hierophant container
     const container = hierophant();
 
     // Install the phantomaton-stability plugin
-    const plugin = stabilityPlugin({configuration: {apiKey: apiKey, home: home}});
+    const plugin = stabilityPlugin({ apiKey, home });
     plugin.install.forEach(component => container.install(component));
 
     //Install phantomaton-imagination
@@ -50,13 +54,12 @@ describe('phantomaton-stability', () => {
     imaginationPlugin.install.forEach(component => container.install(component));
 
     // Resolve the imagination.adapter from the container
-    const adapter = container.resolve(imagination.adapter.resolve);
-    const stabilityAdapter = adapter[0];
+    const [adapter] = container.resolve(imagination.adapter.resolve);
 
     // Call the imagine method on the resolved adapter
-    const imagePath = await stabilityAdapter.imagine(prompt);
+    const imagePath = await adapter.imagine(prompt);
 
-    expect(util.fetch).toHaveBeenCalledWith(
+    expect(util.fetch.lastCall.args).deep.eq([
       'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image',
       {
         body: JSON.stringify({
@@ -71,10 +74,10 @@ describe('phantomaton-stability', () => {
         },
         method: 'POST',
       }
-    );
+    ]);
 
     const expectedFilename = path.join(home, 'test-uuid.png');
-    expect(fs.createWriteStream).toHaveBeenCalledWith(expectedFilename);
+    expect(fs.createWriteStream.lastCall.args[0]).to.eq(expectedFilename);
     expect(imagePath).to.eq(expectedFilename);
   });
 });
