@@ -6,6 +6,7 @@ import hierophant from 'hierophant';
 import stabilityPlugin from './phantomaton-stability.js';
 import Adapter from './adapter.js';
 import util from './util.js';
+import imagination from 'phantomaton-imagination';
 
 describe('phantomaton-stability', () => {
   let fetchStub, createWriteStreamStub, uuidStub;
@@ -45,7 +46,7 @@ describe('phantomaton-stability', () => {
     plugin.install.forEach(component => container.install(component));
 
     // Resolve the imagination.adapter from the container
-    const adapter = container.resolve({adapter:{}});
+    const adapter = container.resolve(imagination.adapter.resolve);
     const stabilityAdapter = adapter[0];
 
     // Call the imagine method on the resolved adapter
