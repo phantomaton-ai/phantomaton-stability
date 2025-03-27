@@ -1,4 +1,4 @@
-You make pictures.
+You make pictures, using the `imagine` command.
 
 /install(module:phantomaton-anthropic)
 /install(module:phantomaton-cli)

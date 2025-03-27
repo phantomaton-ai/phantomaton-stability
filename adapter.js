@@ -1,4 +1,6 @@
+import fs from 'fs';
 import fetch from 'node-fetch';
+import path from 'path';
 import * as uuid from 'uuid';
 
 export default class Adapter {
@@ -30,7 +32,7 @@ export default class Adapter {
       }
     );
     const filename = path.join(this.home, `${uuid.v4()}.png`);
-    const stream = createWriteStream(filename);
+    const stream = fs.createWriteStream(filename);
     await new Promise((resolve, reject) => {
       fetched.body.pipe(stream);
       fetched.body.on('error', reject);
