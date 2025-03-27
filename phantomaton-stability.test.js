@@ -2,20 +2,20 @@ import { expect, stub } from 'lovecraft';
 import fs from 'fs';
 import path from 'path';
 import * as uuid from 'uuid';
-import fetch from 'node-fetch';
 
+import util from './util.js';
 import Adapter from './adapter.js';
 
-describe('stabilityAdapter', () => {
+describe('Phantomaton Stability Plugin', () => {
   let fetchStub, createWriteStreamStub, uuidStub;
   const apiKey = 'test-api-key';
   const home = 'test-images';
   let adapter;
 
   beforeEach(() => {
-    fetchStub = stub(fetch, 'default');
+    fetchStub = stub(util, 'fetch');
     createWriteStreamStub = stub(fs, 'createWriteStream');
-    uuidStub = stub(uuid, 'v4').returns('test-uuid');
+    uuidStub = stub(util, 'uuid').returns('test-uuid');
     adapter = new Adapter({ apiKey, home });
   });
 
@@ -25,7 +25,7 @@ describe('stabilityAdapter', () => {
     uuidStub.restore();
   });
 
-  it('does call the Stability AI API and save the image to a file', async () => {
+  it('calls the Stability AI API and saves the image to a file', async () => {
     const prompt = 'A cat riding a unicorn';
     const mockResponse = {
       body: {

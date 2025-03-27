@@ -1,7 +1,7 @@
 import fs from 'fs';
-import fetch from 'node-fetch';
 import path from 'path';
-import * as uuid from 'uuid';
+
+import util from './util.js';
 
 export default class Adapter {
   constructor({ apiKey, home }) {
@@ -19,7 +19,7 @@ export default class Adapter {
       width: 1344
     };
     
-    const fetched = await fetch(
+    const fetched = await util.fetch(
       'https://api.stability.ai/v1/generation/stable-diffusion-v1-6/text-to-image',
       {
         body: JSON.stringify(payload),
@@ -31,7 +31,7 @@ export default class Adapter {
         method: 'POST',
       }
     );
-    const filename = path.join(this.home, `${uuid.v4()}.png`);
+    const filename = path.join(this.home, `${util.uuid()}.png`);
     const stream = fs.createWriteStream(filename);
     await new Promise((resolve, reject) => {
       fetched.body.pipe(stream);
