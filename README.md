@@ -28,7 +28,9 @@ You can configure the API key and home directory (where generated images are sto
 {
  "phantomaton-stability": {
    "apiKey": "YOUR_STABILITY_API_KEY",
-   "home": "path/to/images"
+   "home": "path/to/images",
+   "width": 1344,
+   "heiight" 960
  }
 }
 ```
