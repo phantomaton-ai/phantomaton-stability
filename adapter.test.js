@@ -21,7 +21,7 @@ describe('Adapter', () => {
     uuidStub.restore();
   });
 
-  it('does call the Stability AI API and save the image to a file with default home', async () => {
+  it('calls the Stability AI API and save the image to a file with default home', async () => {
     const prompt = 'A cat riding a unicorn';
     const mockResponse = {
       body: {
@@ -50,7 +50,7 @@ describe('Adapter', () => {
     expect(imagePath).to.eq(expectedFilename);
   });
 
-  it('does call the Stability AI API and save the image to a file with custom home', async () => {
+  it('calls the Stability AI API and save the image to a file with custom home', async () => {
     const prompt = 'A cat riding a unicorn';
     const mockResponse = {
       body: {
