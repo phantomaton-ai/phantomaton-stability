@@ -7,15 +7,15 @@ export default class Adapter {
   constructor({ apiKey, home, height, width }) {
     this.apiKey = apiKey;
     this.home = home || 'data/images';
-    this.height = height || 960;
-    this.width = width || 1344;
+    this.width = 1344;
+    this.height = 960;
   }
 
-  async imagine(prompt) {
+  async imagine(prompt, parameters = {}) {
     const payload = {
       text_prompts: [{ text: prompt, weight: 1.0 }],
-      height: this.height,
-      width: this.width
+      height: parameters.height || this.height || 960,
+      width: parameters.width || this.width || 1344
     };
     
     const fetched = await util.fetch(
