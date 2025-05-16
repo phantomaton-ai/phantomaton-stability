@@ -4,19 +4,18 @@ import path from 'path';
 import util from './util.js';
 
 export default class Adapter {
-  constructor({ apiKey, home }) {
+  constructor({ apiKey, home, height, width }) {
     this.apiKey = apiKey;
     this.home = home || 'data/images';
+    this.height = height || 960;
+    this.width = width || 1344;
   }
 
   async imagine(prompt) {
     const payload = {
-      text_prompts: [{
-        text: prompt,
-        weight: 1.0
-      }],
-      height: 960,
-      width: 1344
+      text_prompts: [{ text: prompt, weight: 1.0 }],
+      height: this.height,
+      width: this.width
     };
     
     const fetched = await util.fetch(
